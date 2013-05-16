@@ -29,7 +29,16 @@ def titles(header, arte):
 
 def artists(header, arte):
     # Exercise: Return only artists
-    print "Not implemented"
+    artists = [ transform_dict(header, row)['artist'] for row in arte ]
+    for a in artists:
+        print a
+
+def funding_source(header, arte):
+    # Return only funding source
+    funding_source = [ transform_dict(header, row)['funding_source'] for row in arte ]
+    unique_funding_source = set(funding_source)
+    for f in unique_funding_source:
+        print f
 
 def locations(header, arte):
     # Exercise: Return only locations
@@ -64,7 +73,13 @@ def medium_by_type(header, arte, medium_type):
 
 def artists_by_firstname(header, arte, name):
     # Exercise: search for artists by first name
-    print "not implemented"
+    artists = [ transform_dict(header, row)['artist'] for row in arte ]
+    regex = re.compile( '(' + name + ')' )
+    for m in set(artists):
+        match = re.search(regex, m)
+        if match:
+            print m
+
 
 def thumbnail(header, arte):
     # Exercise: download the thumbnails of all the works of art
@@ -92,6 +107,10 @@ def demo(args, arte):
         artists(header, arte)
     elif args.artists_by_medium:
         artists_by_medium(header, arte, args.artists_by_medium)
+    elif args.artists_by_firstname:
+        artists_by_firstname(header, arte, args.artists_by_firstname)
+    elif args.funding_source:
+        funding_source(header, arte)
     elif args.medium:
         medium(header, arte)
     elif args.medium_type:
@@ -122,6 +141,8 @@ if __name__ == '__main__':
     argparser.add_argument("--titles", help="print titles of public art", action="store_true", default=False)
     argparser.add_argument("--descriptions", help="print descriptions of public art", action="store_true", default=False)
     argparser.add_argument("--artists", help="print artists", action="store_true", default=False)
+    argparser.add_argument("--artists_by_firstname", help="print artists by first name", action="store", default=None)
+    argparser.add_argument("--funding_source", help="print funding_source", action="store_true", default=False)
     argparser.add_argument("--medium", help="print mediums", action="store_true", default=False)
     argparser.add_argument("--asjson", help="return file contents at json", action="store_true", default=False)
     argparser.add_argument("--medium-type", help="print mediums of type TYPE", action="store", default=None)
@@ -133,4 +154,5 @@ if __name__ == '__main__':
     with open('public_art.csv', 'rb') as csvfile:
         arte = csv.reader(csvfile, delimiter=',', quotechar='"')
         demo(args, arte)
+
 
