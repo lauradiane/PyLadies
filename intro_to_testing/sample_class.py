@@ -14,10 +14,15 @@ class SampleClass(object):
         return self._mylist
 
     def myname(self):
-        pass
+        return "Laura"
 
     def add_myname_to_mylist(self):
-        pass
+        l = self.mylist()
+        name = self.myname()
+        l.append(name)
+        return l
 
     def add_to_mylist(self, element):
-        pass
+        l = self.mylist()
+        l.append(element)
+        return l
