@@ -9,16 +9,15 @@ def test_pdxart():
 
 def test_header():
     """ Test PdxArt header """
-    raise SkipTest
+    # raise SkipTest
     art = PdxArt()
     header = art.header()
-    expected_header = [ 'this', 'that' ]
-    assert_equal(expected_header, header)
+    expected_header = [ 'record_id', 'artist' ]
+    assert_equal(expected_header, header[:2])
 
 def test_locations():
     """ Test that latitude and longitude are valid """
-    """ Mystery! Why does this test not show the docstring? """
-    raise SkipTest
+    # raise SkipTest
     art = PdxArt()
     for location in art.locations():
         yield check_location, location
